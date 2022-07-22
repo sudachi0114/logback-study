@@ -45,7 +45,7 @@ $ sbt test
 
 「単純な assertion と、Before, After trait を使って、BDD スタイルで Scalatest を活用する」とある
 
-[BDD: Behavior Driven Development](https://ja.wikipedia.org/wiki/%E3%83%93%E3%83%98%E3%82%A4%E3%83%93%E3%82%A2%E9%A7%86%E5%8B%95%E9%96%8B%E7%99%BA)
+[BDD: Behavior Driven Development | ふるまい駆動開発](https://ja.wikipedia.org/wiki/%E3%83%93%E3%83%98%E3%82%A4%E3%83%93%E3%82%A2%E9%A7%86%E5%8B%95%E9%96%8B%E7%99%BA)
 
 ### 実行方法
 
