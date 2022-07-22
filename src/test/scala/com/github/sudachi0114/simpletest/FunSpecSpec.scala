@@ -22,5 +22,9 @@ class FunSpecSpec extends AnyFunSpec {
         emptyStack.pop()
       }
     }
+
+    it("should be error") {
+      assert(1 == 2)
+    }
   }
 }
