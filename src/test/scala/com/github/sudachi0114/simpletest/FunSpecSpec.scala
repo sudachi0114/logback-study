@@ -1,11 +1,18 @@
 package com.github.sudachi0114.simpletest
 
+import org.scalatest.BeforeAndAfter
 import org.scalatest.funspec.AnyFunSpec
 
-import scala.collection.mutable
 import scala.collection.mutable.Stack
 
-class FunSpecSpec extends AnyFunSpec {
+class FunSpecSpec extends AnyFunSpec with BeforeAndAfter {
+
+  var stack: Stack[Int] = _
+
+  before {
+    stack = new Stack[Int]
+  }
+
   describe("A Stack") {
 
     it("should pop values in last-in-first-out order") {
@@ -17,15 +24,9 @@ class FunSpecSpec extends AnyFunSpec {
     }
 
     it("should throw NoSuchElementException if an empty stack is poped") {
-      val emptyStack = new mutable.Stack[Int]
       intercept[NoSuchElementException]{
-        emptyStack.pop()
+        stack.pop()
       }
-    }
-
-    it("should be error") {
-      // assert(1 == 2)
-      assert(1 === 2) // `===` give more informative message
     }
   }
 }
