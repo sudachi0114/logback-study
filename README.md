@@ -4,7 +4,10 @@
 
 教材: https://docs.scala-lang.org/overviews/scala-book/sbt-scalatest-tdd.html
 
-(公式: https://www.scalatest.org/install)
+(Scalatest 公式: https://www.scalatest.org/install)
+
+* 最新版で Scala3 対応してた
+  - https://docs.scala-lang.org/scala3/book/tools-sbt.html#using-sbt-with-scalatest
 
 のために ScalaTest を勉強する
 
