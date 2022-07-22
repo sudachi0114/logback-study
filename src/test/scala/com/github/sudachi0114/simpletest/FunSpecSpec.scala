@@ -24,7 +24,8 @@ class FunSpecSpec extends AnyFunSpec {
     }
 
     it("should be error") {
-      assert(1 == 2)
+      // assert(1 == 2)
+      assert(1 === 2) // `===` give more informative message
     }
   }
 }
