@@ -13,9 +13,11 @@ scalaVersion := "2.13.8"
 
 // It's possible to define many kinds of settings, such as:
 
-name := "scalatest-sample"
+name := "jackson-module-sample"
 organization := "com.github.sudachi0114"
-version := "1.0"
+version := "0.0.1-SNAPSHOT"
+
+scalacOptions ++= Seq("-Xlint", "-deprecation", "-unchecked")
 
 // Note, it's not required for you to define these three settings. These are
 // mostly only necessary if you intend to publish your library's binaries on a
@@ -25,8 +27,10 @@ version := "1.0"
 // Want to use a published library in your project?
 // You can define other libraries as dependencies in your build like this:
 
-libraryDependencies +=
+libraryDependencies ++= Seq(
+  "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.13.2",
   "org.scalatest" %% "scalatest" % "3.2.11" % Test
+)
 
 // Here, `libraryDependencies` is a set of dependencies, and by using `+=`,
 // we're adding the scala-parser-combinators dependency to the set of dependencies
