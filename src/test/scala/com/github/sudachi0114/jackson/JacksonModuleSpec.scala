@@ -17,7 +17,7 @@ class JacksonModuleSpec extends AnyFunSpec with Matchers {
            |   {"name":"Saburo","age":25}]}""".stripMargin
        println(json)
 
-      // Scala モジュールを使う時は、Jackson の ObjectMapper に ScalaModule を登録すればよい
+      // Scala モジュールを使う時は、Jackson の ObjectMapper に DefaultScalaModule を登録すればよい
       val mapper = new ObjectMapper
       mapper.registerModule(DefaultScalaModule)
 

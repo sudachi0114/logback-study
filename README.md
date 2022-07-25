@@ -20,6 +20,7 @@
 - `Matchers` を mixin する必要がある
 
 結構バージョンで場所が違うみたい
+
 [using matchers - Scalatest](https://www.scalatest.org/user_guide/using_matchers)
 
 ```diff
@@ -32,6 +33,7 @@
 - FunSpec
 
 これも FunSpec じゃなくて、AnyFunSpec に名前が変わったのかな
+
 [AnyFunSpec - Scalatest](https://www.scalatest.org/getting_started_with_fun_spec)
 
 ```diff
