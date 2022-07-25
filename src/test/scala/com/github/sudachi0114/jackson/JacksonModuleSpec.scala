@@ -8,7 +8,7 @@ import com.fasterxml.jackson.module.scala.DefaultScalaModule
 class JacksonModuleSpec extends AnyFunSpec with Matchers {
 
   describe("JacksonModuleSpec") {
-    it("should hoge") {
+    it("should parse json into case class") {
       val json =
         """|{"name":"some organization",
            | "persons":
@@ -17,6 +17,7 @@ class JacksonModuleSpec extends AnyFunSpec with Matchers {
            |   {"name":"Saburo","age":25}]}""".stripMargin
        println(json)
 
+      // Scala モジュールを使う時は、Jackson の ObjectMapper に ScalaModule を登録すればよい
       val mapper = new ObjectMapper
       mapper.registerModule(DefaultScalaModule)
 
