@@ -2,6 +2,10 @@
 
 ## jackson-module-scala の勉強
 
+教材: https://kazuhira-r.hatenablog.com/entry/20140419/1397899036
+
+( jackson-module-scala 公式リポジトリ: https://github.com/FasterXML/jackson-module-scala )
+
 ### sbt options
 
 ```sbt
