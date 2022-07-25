@@ -1,6 +1,35 @@
 # scala-playground
 
-## ScalaTest の勉強
+## jackson-module-scala の勉強
+
+### sbt options
+
+```sbt
+scalacOptions ++= Seq("-Xlint", "-deprecation", "-unchecked")
+```
+
+- `-Xlint`: Enable recommended warnings
+- `-deprecation`: Emit warning and location for usages of deprecated APIs.
+- `-unchecked`: Enable additional warnings where generated code depends on assumptions.
+
+[How to use compiler options - Scala docs](https://docs.scala-lang.org/overviews/compiler-options/index.html)
+
+- `incOptions`
+
+```sbt
+incOptions := incOptions.value.withNameHashing(true)
+```
+
+の設定でエラー出るなと思ったら、`sbt 1.0.0` から廃止されたらしい
+
+
+> name hashing が常に有効となったため、incOptions.value.withNameHashing(...) はオプションは無くなる。
+
+[sbt 公式ドキュメント](https://www.scala-sbt.org/1.x/docs/ja/Combined+Pages.html#:~:text=name%20hashing%20%E3%81%8C%E5%B8%B8%E3%81%AB%E6%9C%89%E5%8A%B9%E3%81%A8%E3%81%AA%E3%81%A3%E3%81%9F%E3%81%9F%E3%82%81%E3%80%81incOptions.value.withNameHashing(...)%20%E3%81%AF%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AF%E7%84%A1%E3%81%8F%E3%81%AA%E3%82%8B%E3%80%82)
+
+---
+
+## `feature/scalatest-study`: ScalaTest の勉強
 
 教材: https://docs.scala-lang.org/overviews/scala-book/sbt-scalatest-tdd.html
 
@@ -18,7 +47,9 @@
 - パッケージ作成
 - メインのコード作成・実行
 - テストコード作成・実行
-- ドキュメント ← ｲﾏｺｺ
+- ドキュメント
+
+---
 
 ## 実行方法
 
@@ -31,12 +62,12 @@ $ sbt test
   - https://qiita.com/opengl-8080/items/49719f2d35171f017aa9
   - https://labs.septeni.co.jp/entry/2019/03/07/120000
     - ← jackson.module っていう、circe と似たようなライブラリがあるっぽい
-  - https://kazuhira-r.hatenablog.com/entry/20140419/1397899036
+  - https://kazuhira-r.hatenablog.com/entry/20140419/1397899036 ← イマココ
   - https://github.com/FasterXML/jackson-module-scala
     - ← scalatest を使っている 
     - ← scalatest 入らない.. ;; (IntelliJ との連携の問題だった)
-      - → 入った！&実行できた
-
+      - → 入った！&実行できた　← feature/scalatest-study
+  
 ## org.scalatest.funspec.AnyFunSpec
 
 - Scalatest 公式ドキュメント: https://www.scalatest.org/getting_started_with_fun_spec
