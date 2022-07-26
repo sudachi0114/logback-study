@@ -1,1 +1,5 @@
 target/
+
+# dotfiles
+.idea/
+.bsp/
