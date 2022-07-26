@@ -15,7 +15,6 @@ class JacksonModuleSpec extends AnyFunSpec with Matchers {
            |  [{"name":"Taro","age":22},
            |   {"name":"Hanako","age":18},
            |   {"name":"Saburo","age":25}]}""".stripMargin
-       println(json)
 
       // Scala モジュールを使う時は、Jackson の ObjectMapper に DefaultScalaModule を登録すればよい
       val mapper = new ObjectMapper
@@ -67,6 +66,46 @@ class JacksonModuleSpec extends AnyFunSpec with Matchers {
       val expectedString = """{"name":"Jiro","age":45}""" // stripMargin だからスペース開けたらダメかも
 
       mapper.writeValueAsString(person) should be (expectedString)
+    }
+  }
+
+  describe("mapping to Scala Collection") {
+    it("should parse json to Scala Collection") {
+      val json =
+        """|{"name":"other organization",
+           | "persons":
+           |  [{"name":"Taro","age":22},
+           |   {"name":"Hanako","age":18},
+           |   {"name":"Saburo","age":25}]}""".stripMargin
+
+      val mapper = new ObjectMapper
+      mapper.registerModule(DefaultScalaModule)
+
+      val expectedPerson = List(
+        Map("name" -> "Taro", "age" -> 22),
+        Map("name" -> "Hanako", "age" -> 18),
+        Map("name" -> "Saburo", "age" -> 25)
+      )
+      val expectedMap = Map("name" -> "other organization", "persons" -> expectedPerson)
+
+      mapper.readValue(json, classOf[Map[_, _]]) should be (expectedMap)
+    }
+
+    it("should produce json from Scala Collection") {
+      val personsListMap = List(
+        Map("name" -> "Taro", "age" -> 22),
+        Map("name" -> "Hanako", "age" -> 18),
+        Map("name" -> "Saburo", "age" -> 25)
+      )
+      val organizationMap = Map("name" -> "other organization", "persons" -> personsListMap)
+
+      val mapper = new ObjectMapper
+      mapper.registerModule(DefaultScalaModule)
+
+      val expectedString = """{"name":"other organization","persons":[{"name":"Taro","age":22},{"name":"Hanako","age":18},{"name":"Saburo","age":25}]}"""
+
+
+      mapper.writeValueAsString(organizationMap) should be (expectedString)
     }
   }
 }
