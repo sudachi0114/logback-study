@@ -29,4 +29,16 @@ class JacksonModuleSpec extends AnyFunSpec with Matchers {
       parsedJson should be (expectedOrganization)
     }
   }
+
+  it("should produce json from case class") {
+    val persons = List(Person("Shirou", 100), Person("Goro", 22), Person("Rokuro", 48))
+    val organization = Organization("another organization", persons)
+
+    val mapper = new ObjectMapper
+    mapper.registerModule(DefaultScalaModule)
+
+    val expectedString = """{"name":"another organization","persons":[{"name":"Shirou","age":100},{"name":"Goro","age":22},{"name":"Rokuro","age":48}]}"""
+
+    mapper.writeValueAsString(organization) should be (expectedString)
+  }
 }
