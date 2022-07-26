@@ -41,4 +41,32 @@ class JacksonModuleSpec extends AnyFunSpec with Matchers {
 
     mapper.writeValueAsString(organization) should be (expectedString)
   }
+
+  describe("mapping to mutable class") {
+    it("should parse use MUTABLE class") {
+      val json = """ { "name": "Taro",
+                      | "age": 22 }""".stripMargin
+
+      val mapper = new ObjectMapper
+      mapper.registerModule(DefaultScalaModule)
+
+      val person = mapper.readValue(json, classOf[MutablePerson])
+
+      person.name should be ("Taro")
+      person.age  should be (22)
+    }
+
+    it("should produce json from MUTABLE class") {
+      val person = new MutablePerson
+      person.name = "Jiro"
+      person.age  = 45
+
+      val mapper = new ObjectMapper
+      mapper.registerModule(DefaultScalaModule)
+
+      val expectedString = """{"name":"Jiro","age":45}""" // stripMargin だからスペース開けたらダメかも
+
+      mapper.writeValueAsString(person) should be (expectedString)
+    }
+  }
 }
