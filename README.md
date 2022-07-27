@@ -1,5 +1,33 @@
 # scala-playground
 
+## logback (logstash-logback-encoder の勉強)
+
+依存関係
+
+```sbt
+libraryDependencies ++= Seq(
+  "ch.qos.logback" % "logback-classic" % "1.2.3",  // logstash-logback-encoder はlogbackに直接依存していないので、logback-classic を追加
+  "net.logstash.logback" % "logstash-logback-encoder" % "5.3",
+)
+```
+
+### logback の設定ファイル
+
+`logback.xml` は `src/main/resources` 下に配置する。
+より正確には、クラスパス内に配置すれば、自動的に読んでくれるらしい。
+(クラスパス内ってどこ？)
+
+[全体の構成 - Slf4j+logbackの基本的な設定と使い方](https://tech.chakapoko.com/java/logging/slf4j-logback-basic.html)
+
+**設定ファイルを探す順番**
+
+1. logback はクラスパス上で `logback.groovy` というファイルを探します
+2. 見つからなかったら、今度はクラスパス上で `logback-test.xml` というファイルを探します
+3. 見つからなかったら、今度はクラスパス上で `logback.xml` というファイルを探します
+4. 何も見つからなかったら、自動的に `BasicConfigurator` を使って設定します。ロギング出力は直接コンソールに出力されるようになります
+
+[logbackの設定](https://xy2401.com/local-docs/java/logback/manual/configuration_ja.html)
+
 ## jackson-module-scala の勉強
 
 教材: https://kazuhira-r.hatenablog.com/entry/20140419/1397899036
@@ -135,9 +163,9 @@ $ sbt test
 ## 最終着地
 * logback の勉強がしたい
   - https://qiita.com/opengl-8080/items/49719f2d35171f017aa9
-  - https://labs.septeni.co.jp/entry/2019/03/07/120000
+  - https://labs.septeni.co.jp/entry/2019/03/07/120000 ← イマココ
     - ← jackson.module っていう、circe と似たようなライブラリがあるっぽい
-  - https://kazuhira-r.hatenablog.com/entry/20140419/1397899036 ← イマココ
+  - https://kazuhira-r.hatenablog.com/entry/20140419/1397899036
   - https://github.com/FasterXML/jackson-module-scala
     - ← scalatest を使っている 
     - ← scalatest 入らない.. ;; (IntelliJ との連携の問題だった)
