@@ -32,7 +32,7 @@ libraryDependencies ++= Seq(
 
 ```bash
 $ sbt
-sbt:jackson-module-sample> testOnly com.github.sudachi0114.logexample.LogExampleSpec
+sbt:logback-study> testOnly com.github.sudachi0114.logexample.LogExampleSpec
 ```
 
 ### 疑問

@@ -13,7 +13,7 @@ scalaVersion := "2.13.8"
 
 // It's possible to define many kinds of settings, such as:
 
-name := "jackson-module-sample"
+name := "logback-study"
 organization := "com.github.sudachi0114"
 version := "0.0.1-SNAPSHOT"
 
