@@ -28,6 +28,19 @@ libraryDependencies ++= Seq(
 
 [logbackの設定](https://xy2401.com/local-docs/java/logback/manual/configuration_ja.html)
 
+### 実行方法
+
+```bash
+$ sbt
+sbt:jackson-module-sample> testOnly com.github.sudachi0114.logexample.LogExampleSpec
+```
+
+### 疑問
+
+- `extends App` がついていると、`scalatest` から呼び出してもログが出力されない..??
+- test で実行する場合も `src/test/resources/logback-test.xml` は必須ではないみたい
+  - この場合も `src/main/resources/logback.xml` を読んでくれているのかな？
+
 ## jackson-module-scala の勉強
 
 教材: https://kazuhira-r.hatenablog.com/entry/20140419/1397899036
