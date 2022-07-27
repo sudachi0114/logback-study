@@ -1,4 +1,6 @@
 target/
 
+# dotfiles
 .idea/
 .bsp/
+
