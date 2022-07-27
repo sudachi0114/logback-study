@@ -28,6 +28,8 @@ scalacOptions ++= Seq("-Xlint", "-deprecation", "-unchecked")
 // You can define other libraries as dependencies in your build like this:
 
 libraryDependencies ++= Seq(
+  "ch.qos.logback" % "logback-classic" % "1.2.3",  // logstash-logback-encoder はlogbackに直接依存していないので、logback-classic を追加
+  "net.logstash.logback" % "logstash-logback-encoder" % "5.3",
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.13.2",
   "org.scalatest" %% "scalatest" % "3.2.11" % Test
 )
