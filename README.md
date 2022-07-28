@@ -47,9 +47,20 @@ logger.info("StructuredArguments.entries {}", entries(Map("k1" -> "v1", "k2" -> 
 
 とのこと。`.asJava` 使うには `scala.collection.JavaConverters._` のインポートが必要だった
 
-IntelliJ だと (なぜか) 打ち消し線が引かれるので「回避方法」を後でやる。
+IntelliJ だと ~~(なぜか)~~ 打ち消し線が引かれるので「回避方法」を後でやる。
 
 [JavaConverters - Scala Javaコレクション変換](http://www.ne.jp/asahi/hishidama/home/tech/scala/collection/javaconv.html)
+
+```log
+[warn] ../scala-playground/src/main/scala/com/github/sudachi0114/logexample/LogExample.scala:14:60: object JavaConverters in package collection is deprecated (since 2.13.0): Use `scala.jdk.CollectionConverters` instead
+```
+
+コンパイル時のログ出力に答えがあった
+
+```diff
+- import scala.collection.JavaConverters._
++ import scala.jdk.CollectionConverters._
+```
 
 ### 疑問
 
