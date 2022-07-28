@@ -4,6 +4,15 @@
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
             <!-- Pretty Format -->
             <jsonGeneratorDecorator class="net.logstash.logback.decorate.PrettyPrintingJsonGeneratorDecorator"/>
+
+            <!-- グローバルなカスタムフィールドを追加 -->
+            <customFields>
+                {
+                    "app_name": "logstash-logback-encoder-in-scala",
+                    "env": "staging"
+                }
+            </customFields>
+
         </encoder>
     </appender>
 
