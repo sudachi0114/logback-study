@@ -35,6 +35,22 @@ $ sbt
 sbt:logback-study> testOnly com.github.sudachi0114.logexample.LogExampleSpec
 ```
 
+### asJava
+
+```scala
+import scala.collection.JavaConverters._
+logger.info("StructuredArguments.entries {}", entries(Map("k1" -> "v1", "k2" -> "v2").asJava)) // 複数の値を追加する
+```
+
+> `logstash-logback-encoder` は内部実装に `Jackson` を使っているので、ログに追加する値は `Jackson` でエンコードできる型である必要があります。
+> ( `Map(...).asJava` しているのはそのためです。これを回避する方法は後述します。)
+
+とのこと。`.asJava` 使うには `scala.collection.JavaConverters._` のインポートが必要だった
+
+IntelliJ だと (なぜか) 打ち消し線が引かれるので「回避方法」を後でやる。
+
+[JavaConverters - Scala Javaコレクション変換](http://www.ne.jp/asahi/hishidama/home/tech/scala/collection/javaconv.html)
+
 ### 疑問
 
 - `extends App` がついていると、`scalatest` から呼び出してもログが出力されない..??
