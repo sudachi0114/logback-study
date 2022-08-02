@@ -29,4 +29,13 @@ object LogExample {
   MDC.put("KEY", "VALUE")
   logger.info("logging with MDC")
   MDC.remove("KEY")
+
+  logger.info("map in map", value(
+    "Scala map",
+    Map(
+      "map" -> Map(
+        "list" -> List(1, 2, 3).asJava
+      ).asJava
+    ).asJava
+  ))
 }
