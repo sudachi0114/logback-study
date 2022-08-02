@@ -38,4 +38,16 @@ object LogExample {
       ).asJava
     ).asJava
   ))
+
+  case class User(id: Long, name: String, interests: List[String])
+  val user = User(100, "userA", List("Scala", "Logging"))
+
+  logger.info("case class logging", value(
+    "case class user",
+    Map(
+      "id" -> user.id,
+      "name" -> user.name,
+      "interests" -> user.interests.asJava
+    ).asJava
+  ))
 }
