@@ -24,4 +24,9 @@ object LogExample {
   // 複数の Markers を組み合わせることも可能
   val marker : LogstashMarker = append("KEY_A", "VALUE_A").and(append("KEY_B", "VALUE_B"))
   logger.info(marker, "multiple markers")
+
+  import org.slf4j.MDC
+  MDC.put("KEY", "VALUE")
+  logger.info("logging with MDC")
+  MDC.remove("KEY")
 }

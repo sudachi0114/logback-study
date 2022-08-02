@@ -79,6 +79,21 @@ logger.info("StructuredArguments.array {}", array("array", "a", "b", "c"))   // 
 logger.info("StructuredArguments.raw {}", raw("raw", """{"KEY":"VALUE"}""")) // Raw な JSON で追加する
 ```
 
+### MDC
+
+https://www.slf4j.org/api/org/slf4j/MDC.html
+
+- [logback+MDCでWebアプリのリクエスト内容を簡単にログに出力する方法](https://qiita.com/namutaka/items/c35c437b7246c5e4d729)
+- [[Java] MDC.putはstatic呼び出しなのにスレッドごとの情報を持てるヒミツ - ThreadLocal](https://zenn.dev/yucatio/articles/24bfaf9ed831a1)
+
+
+> 複数クライアントからの同時アクセス時のログ出力のパターンとしてMDCが考案されました
+
+> ポピュラーなログ出力ライブラリである、log4j2、logback等はMDCを実装しています 
+
+
+- [slf4jで独自ログ項目を追加(MDC)](https://www.nextdoorwith.info/wp/se/slf4j-custom-item-mdc/)
+
 ### 疑問
 
 - `extends App` がついていると、`scalatest` から呼び出してもログが出力されない..??
