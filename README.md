@@ -62,6 +62,23 @@ IntelliJ だと ~~(なぜか)~~ 打ち消し線が引かれるので「回避方
 + import scala.jdk.CollectionConverters._
 ```
 
+### Jackson-module との関係
+
+`logstash-logback-encoder` は内部実装に `Jackson` を使っている。
+なので、ログに追加する値は `Jackson` でエンコードできる型である必要がある。
+
+→ `Map(...).asJava` しているのはそのため
+
+```scala
+// StructuredArgument で動的にフィールドを追加
+import net.logstash.logback.argument.StructuredArguments._
+logger.info("StructuredArguments.value {}", value("KEY", "VALUE"))       // 単一の値を追加する
+logger.info("StructuredArguments.keyValue {}", keyValue("KEY", "VALUE")) // 単一の値を追加する
+logger.info("StructuredArguments.entries {}", entries(Map("k1" -> "v1", "k2" -> "v2").asJava)) // 複数の値を追加する
+logger.info("StructuredArguments.array {}", array("array", "a", "b", "c"))   // 複数の値を追加する
+logger.info("StructuredArguments.raw {}", raw("raw", """{"KEY":"VALUE"}""")) // Raw な JSON で追加する
+```
+
 ### 疑問
 
 - `extends App` がついていると、`scalatest` から呼び出してもログが出力されない..??
