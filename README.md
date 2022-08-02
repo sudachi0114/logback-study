@@ -1,6 +1,6 @@
 # scala-playground
 
-## logback (logstash-logback-encoder の勉強)
+## `feature/logstash-logback-encoder-study` logback (logstash-logback-encoder の勉強)
 
 依存関係
 
@@ -68,7 +68,9 @@ IntelliJ だと ~~(なぜか)~~ 打ち消し線が引かれるので「回避方
 - test で実行する場合も `src/test/resources/logback-test.xml` は必須ではないみたい
   - この場合も `src/main/resources/logback.xml` を読んでくれているのかな？
 
-## jackson-module-scala の勉強
+---
+
+## `feature/jackson-module-study` jackson-module-scala の勉強
 
 教材: https://kazuhira-r.hatenablog.com/entry/20140419/1397899036
 
