@@ -1,4 +1,4 @@
-# scala-playground
+# logback-study
 
 ## `feature/logstash-logback-encoder-study` logback (logstash-logback-encoder の勉強)
 
@@ -52,7 +52,7 @@ IntelliJ だと ~~(なぜか)~~ 打ち消し線が引かれるので「回避方
 [JavaConverters - Scala Javaコレクション変換](http://www.ne.jp/asahi/hishidama/home/tech/scala/collection/javaconv.html)
 
 ```log
-[warn] ../scala-playground/src/main/scala/com/github/sudachi0114/logexample/LogExample.scala:14:60: object JavaConverters in package collection is deprecated (since 2.13.0): Use `scala.jdk.CollectionConverters` instead
+[warn] ../logback-study/src/main/scala/com/github/sudachi0114/logexample/LogExample.scala:14:60: object JavaConverters in package collection is deprecated (since 2.13.0): Use `scala.jdk.CollectionConverters` instead
 ```
 
 コンパイル時のログ出力に答えがあった
