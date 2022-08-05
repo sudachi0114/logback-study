@@ -1,6 +1,5 @@
 package com.github.sudachi0114.logexample
 
-import net.logstash.logback.marker.LogstashMarker
 import org.slf4j.LoggerFactory
 
 object LogExample {
@@ -14,11 +13,6 @@ object LogExample {
   logger.info("StructuredArguments.keyValue {}", keyValue("KEY", "VALUE"))
   logger.info("StructuredArguments.entries {}", entries(Map("k1" -> "v1", "k2" -> "v2").asJava))
   logger.info("StructuredArguments.array {}", array("array", "a", "b", "c"))
-
-  import org.slf4j.MDC
-  MDC.put("KEY", "VALUE")
-  logger.info("logging with MDC")
-  MDC.remove("KEY")
 
   logger.info("map in map", value(
     "Scala map",
