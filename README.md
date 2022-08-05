@@ -91,6 +91,13 @@ logger.info("StructuredArguments.raw {}", raw("raw", """{"KEY":"VALUE"}""")) // 
 
 へぇ〜、`import なんちゃら.auto._` みたいなのしなくても、インストールされていれば、自動でパースされるんだ〜。すご〜
 
+* 実行方法
+
+```bash
+$ sbt
+sbt:logback-study> testOnly com.github.sudachi0114.logexample.CaseClassLoggingSpec
+```
+
 ### MDC
 
 https://www.slf4j.org/api/org/slf4j/MDC.html
