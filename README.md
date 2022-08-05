@@ -1,6 +1,127 @@
 # scala-playground
 
-## jackson-module-scala の勉強
+## `feature/logstash-logback-encoder-study` logback (logstash-logback-encoder の勉強)
+
+依存関係
+
+```sbt
+libraryDependencies ++= Seq(
+  "ch.qos.logback" % "logback-classic" % "1.2.3",  // logstash-logback-encoder はlogbackに直接依存していないので、logback-classic を追加
+  "net.logstash.logback" % "logstash-logback-encoder" % "5.3",
+)
+```
+
+### logback の設定ファイル
+
+`logback.xml` は `src/main/resources` 下に配置する。
+より正確には、クラスパス内に配置すれば、自動的に読んでくれるらしい。
+(クラスパス内ってどこ？)
+
+[全体の構成 - Slf4j+logbackの基本的な設定と使い方](https://tech.chakapoko.com/java/logging/slf4j-logback-basic.html)
+
+**設定ファイルを探す順番**
+
+1. logback はクラスパス上で `logback.groovy` というファイルを探します
+2. 見つからなかったら、今度はクラスパス上で `logback-test.xml` というファイルを探します
+3. 見つからなかったら、今度はクラスパス上で `logback.xml` というファイルを探します
+4. 何も見つからなかったら、自動的に `BasicConfigurator` を使って設定します。ロギング出力は直接コンソールに出力されるようになります
+
+[logbackの設定](https://xy2401.com/local-docs/java/logback/manual/configuration_ja.html)
+
+### 実行方法
+
+```bash
+$ sbt
+sbt:logback-study> testOnly com.github.sudachi0114.logexample.LogExampleSpec
+```
+
+### asJava
+
+```scala
+import scala.collection.JavaConverters._
+logger.info("StructuredArguments.entries {}", entries(Map("k1" -> "v1", "k2" -> "v2").asJava)) // 複数の値を追加する
+```
+
+> `logstash-logback-encoder` は内部実装に `Jackson` を使っているので、ログに追加する値は `Jackson` でエンコードできる型である必要があります。
+> ( `Map(...).asJava` しているのはそのためです。これを回避する方法は後述します。)
+
+とのこと。`.asJava` 使うには `scala.collection.JavaConverters._` のインポートが必要だった
+
+IntelliJ だと ~~(なぜか)~~ 打ち消し線が引かれるので「回避方法」を後でやる。
+
+[JavaConverters - Scala Javaコレクション変換](http://www.ne.jp/asahi/hishidama/home/tech/scala/collection/javaconv.html)
+
+```log
+[warn] ../scala-playground/src/main/scala/com/github/sudachi0114/logexample/LogExample.scala:14:60: object JavaConverters in package collection is deprecated (since 2.13.0): Use `scala.jdk.CollectionConverters` instead
+```
+
+コンパイル時のログ出力に答えがあった
+
+```diff
+- import scala.collection.JavaConverters._
++ import scala.jdk.CollectionConverters._
+```
+
+### Jackson-module との関係
+
+`logstash-logback-encoder` は内部実装に `Jackson` を使っている。
+なので、ログに追加する値は `Jackson` でエンコードできる型である必要がある。
+
+→ `Map(...).asJava` しているのはそのため
+
+```scala
+// StructuredArgument で動的にフィールドを追加
+import net.logstash.logback.argument.StructuredArguments._
+logger.info("StructuredArguments.value {}", value("KEY", "VALUE"))       // 単一の値を追加する
+logger.info("StructuredArguments.keyValue {}", keyValue("KEY", "VALUE")) // 単一の値を追加する
+logger.info("StructuredArguments.entries {}", entries(Map("k1" -> "v1", "k2" -> "v2").asJava)) // 複数の値を追加する
+logger.info("StructuredArguments.array {}", array("array", "a", "b", "c"))   // 複数の値を追加する
+logger.info("StructuredArguments.raw {}", raw("raw", """{"KEY":"VALUE"}""")) // Raw な JSON で追加する
+```
+
+**`jackson-module` を使った logging**
+
+> `jackson-module-scala` は `Scala` 向けの `Jackson` モジュールです。
+> `Scala` のコレクションや `case class` をJSONにマッピング可能になります。
+
+> `logstash-logback-encoder` はクラスパスに存在する `Jackson` のモジュールを自動的に取得し、マッピングに登録してくれます。
+> なので、依存関係を追加するだけでコードを変更する必要はありません!
+>
+> (この動作はバージョン `5.3` でサポートされた動作です。それ以前のバージョンは手動で追加する必要があります。)
+
+へぇ〜、`import なんちゃら.auto._` みたいなのしなくても、インストールされていれば、自動でパースされるんだ〜。すご〜
+
+* 実行方法
+
+```bash
+$ sbt
+sbt:logback-study> testOnly com.github.sudachi0114.logexample.CaseClassLoggingSpec
+```
+
+### MDC
+
+https://www.slf4j.org/api/org/slf4j/MDC.html
+
+- [logback+MDCでWebアプリのリクエスト内容を簡単にログに出力する方法](https://qiita.com/namutaka/items/c35c437b7246c5e4d729)
+- [[Java] MDC.putはstatic呼び出しなのにスレッドごとの情報を持てるヒミツ - ThreadLocal](https://zenn.dev/yucatio/articles/24bfaf9ed831a1)
+
+
+> 複数クライアントからの同時アクセス時のログ出力のパターンとしてMDCが考案されました
+
+> ポピュラーなログ出力ライブラリである、log4j2、logback等はMDCを実装しています 
+
+
+- [slf4jで独自ログ項目を追加(MDC)](https://www.nextdoorwith.info/wp/se/slf4j-custom-item-mdc/)
+
+### 疑問
+
+- `extends App` がついていると、`scalatest` から呼び出してもログが出力されない..??
+- test で実行する場合も `src/test/resources/logback-test.xml` は必須ではないみたい
+  - この場合も `src/main/resources/logback.xml` を読んでくれているのかな？
+
+---
+
+## `feature/jackson-module-study` jackson-module-scala の勉強
 
 教材: https://kazuhira-r.hatenablog.com/entry/20140419/1397899036
 
@@ -135,9 +256,9 @@ $ sbt test
 ## 最終着地
 * logback の勉強がしたい
   - https://qiita.com/opengl-8080/items/49719f2d35171f017aa9
-  - https://labs.septeni.co.jp/entry/2019/03/07/120000
+  - https://labs.septeni.co.jp/entry/2019/03/07/120000 ← イマココ
     - ← jackson.module っていう、circe と似たようなライブラリがあるっぽい
-  - https://kazuhira-r.hatenablog.com/entry/20140419/1397899036 ← イマココ
+  - https://kazuhira-r.hatenablog.com/entry/20140419/1397899036
   - https://github.com/FasterXML/jackson-module-scala
     - ← scalatest を使っている 
     - ← scalatest 入らない.. ;; (IntelliJ との連携の問題だった)

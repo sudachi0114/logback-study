@@ -1,0 +1,22 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- JSON ログを出力する encoder -->
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <!-- Pretty Format -->
+            <jsonGeneratorDecorator class="net.logstash.logback.decorate.PrettyPrintingJsonGeneratorDecorator"/>
+
+            <!-- グローバルなカスタムフィールドを追加 -->
+            <customFields>
+                {
+                    "app_name": "logstash-logback-encoder-in-scala",
+                    "env": "staging"
+                }
+            </customFields>
+
+        </encoder>
+    </appender>
+
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
