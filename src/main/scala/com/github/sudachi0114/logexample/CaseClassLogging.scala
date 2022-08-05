@@ -18,6 +18,7 @@ object CaseClassLogging {
   ))
 
   case class User(id: Long, name: String, interests: List[String])
+  case class Group(value: Long, name: String, user: Set[User])
 
   val user = User(100, "userA", List("Scala", "Logging"))
 
@@ -29,4 +30,20 @@ object CaseClassLogging {
       "interests" -> user.interests.asJava
     ).asJava
   ))
+
+  // using jackson-module-scala
+  val group = Group(9000, "The Scala Group", Set(
+    User(100, "userA", List("Scala", "Logging")),
+    User(200, "userB", List("Java", "Kotlin"))
+  ))
+
+  val scalaMap = Map(
+    "KEY" -> "VALUE",
+    "map_in_map" -> Map(
+      "INNER_KEY" -> "INNER_VALUE"
+    ),
+    "group" -> group
+  )
+
+  logger.info("logging with Scala: {}", value("scala_map", scalaMap))
 }

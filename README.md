@@ -79,6 +79,18 @@ logger.info("StructuredArguments.array {}", array("array", "a", "b", "c"))   // 
 logger.info("StructuredArguments.raw {}", raw("raw", """{"KEY":"VALUE"}""")) // Raw な JSON で追加する
 ```
 
+**`jackson-module` を使った logging**
+
+> `jackson-module-scala` は `Scala` 向けの `Jackson` モジュールです。
+> `Scala` のコレクションや `case class` をJSONにマッピング可能になります。
+
+> `logstash-logback-encoder` はクラスパスに存在する `Jackson` のモジュールを自動的に取得し、マッピングに登録してくれます。
+> なので、依存関係を追加するだけでコードを変更する必要はありません!
+>
+> (この動作はバージョン `5.3` でサポートされた動作です。それ以前のバージョンは手動で追加する必要があります。)
+
+へぇ〜、`import なんちゃら.auto._` みたいなのしなくても、インストールされていれば、自動でパースされるんだ〜。すご〜
+
 ### MDC
 
 https://www.slf4j.org/api/org/slf4j/MDC.html
